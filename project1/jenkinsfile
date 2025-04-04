@@ -9,7 +9,8 @@ pipeline {
      } 
     
      environment { 
-        CONTAINERIMAGE = 'nginx:latest'  // Fixed spelling (ngnix → nginx)
+        CONTAINERIMAGE = 'nginx:latest'  
+          // Fixed spelling (ngnix → nginx)
      }
      stages {
         stage("Code Checkout") {
@@ -21,6 +22,11 @@ pipeline {
         stage('PHP Code Deploy') { 
             steps {
                 sh "sudo cp -r /home/ec2-user/jenkins/phpdevelopment/src/* /var/www/html/"
+            }
+        }
+        stage('PHP Code remove') { 
+            steps {
+                sh "sudo rm -rf /home/ec2-user/jenkins/phpdevelopment/src/* /var/www/html/"
             }
         }
 
