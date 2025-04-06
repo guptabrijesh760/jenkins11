@@ -20,7 +20,7 @@ pipeline {
 
         stage('PHP Code Deploy') { 
             steps {
-                sh "sudo cp -r  '/home/ec2-user/jenkins/phpdevelopment/src/*' /var/www/html/"
+                sh "sudo cp -r /home/ec2-user/jenkins/phpdevelopment/src/* /var/www/html/"
             }
         }
 
