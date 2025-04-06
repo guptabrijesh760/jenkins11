@@ -1,0 +1,33 @@
+pipeline { 
+    agent { 
+       // Using an agent machine by label
+        label 'phpdev'  
+     }
+     options { 
+        // Timeout counter starts AFTER agent is allocated
+        timeout(time: 60, unit: 'SECONDS') 
+     } 
+    
+     environment { 
+        CONTAINERIMAGE = 'nginx:latest'  // Fixed spelling (ngnix → nginx)
+     }
+     stages {
+        stage("Code Checkout") {
+            steps {
+                git branch: 'phpdevelopment', url: 'https://github.com/guptabrijesh760/jenkins11.git'
+            }
+        }
+
+        stage('PHP Code Deploy') { 
+            steps {
+                sh "sudo cp -r /home/ec2-user/jenkins/phpdevelopment/src/* /var/www/html/"
+            }
+        }
+
+        stage("Restart Server") {
+            steps {
+                sh 'sudo systemctl restart httpd'
+            }
+        }
+    }
+}
